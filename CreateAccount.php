@@ -1,10 +1,10 @@
 <?php
 	$inData = getRequestInfo();
 	
-	$firstName = $inData["FirstName"];
-	$lastName = $inData["LastName"];
-	$password = $inData["Password"];
-	$userId = $inData["ID"];
+	$Login = $inData["Login"];
+	$FirstName = $inData["FirstName"];
+	$LastName = $inData["LastName"];
+	$Password = $inData["Password"];
 
 	$conn = new mysqli("localhost", "Obelisk", "TheTormentorOfCOP4331!", "COP4331");
 	if ($conn->connect_error) 
@@ -13,7 +13,7 @@
 	} 
 	else
 	{
-		$sql = "insert into Users (UserId,Name) VALUES (" . $userId . ",'" . $firstName . ",'" . $lastName . ",'" . $password . "')";
+		$sql = "INSERT INTO  Users (Login,FirstName,LastName,Password) VALUES ('" . $Login . "','" . $FirstName . "','" . $LastName . "','" . $Password . "')";
 		if( $result = $conn->query($sql) != TRUE )
 		{
 			returnWithError( $conn->error );
