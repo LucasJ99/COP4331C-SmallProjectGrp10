@@ -1,9 +1,9 @@
 <?php
 	$inData = getRequestInfo();
 	
-	$firstName = $inData["FirstName"];
-	$lastName = $inData["LastName"];
-	$ID = $inData["UserID"];
+	$UserID = $inData["UserID"];
+	$FirstName = $inData["FirstName"];
+	$LastName = $inData["LastName"];
 	
 	$conn = new mysqli("localhost", "Obelisk", "TheTormentorOfCOP4331!", "COP4331");
 	if ($conn->connect_error) 
@@ -12,7 +12,7 @@
 	} 
 	else
 	{
-		$sql = "DELETE FROM Contacts WHERE FirstName='" . $firstName . "' AND LastName='" . lastName . "' AND ID='" . $ID . "";
+		$sql = "DELETE FROM Contacts WHERE UserID=" . $UserID . " AND  FirstName='" . $FirstName . "' AND LastName='" . $LastName . "'";
 		$result = $conn->query($sql);
 		if( $result = $conn->query($sql) != TRUE )
 		{
