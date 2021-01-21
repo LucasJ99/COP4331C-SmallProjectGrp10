@@ -1,12 +1,12 @@
 <?php
 	$inData = getRequestInfo();
 	
-	$firstName = $inData["FirstName"];
-	$lastName = $inData["LastName"];
-	$phone = $inData["PhoneNumber"];
-	$email = $inData["Email"];
-	$address = $inData["Address"];
-	$userId = $inData["UserID"];
+	$FirstName = $inData["FirstName"];
+	$LastName = $inData["LastName"];
+	$PhoneNumber = $inData["PhoneNumber"];
+	$Email = $inData["Email"];
+	$Address = $inData["Address"];
+	$UserID = $inData["UserID"];
 
 	$conn = new mysqli("localhost", "Obelisk", "TheTormentorOfCOP4331!", "COP4331");
 	if ($conn->connect_error) 
@@ -15,7 +15,7 @@
 	} 
 	else
 	{
-		$sql = "insert into Contacts (UserId,Name) VALUES (" . $userId . ",'" . $firstName . ",'" . $lastName . ",'" . $phone . ",'" . $email . ",'" . $address . "')";
+		$sql = "INSERT INTO Contacts (UserID , FirstName , LastName , PhoneNumber ,  Email , Address) VALUES (". $UserID. ",'" . $FirstName . "','" . $LastName . "','" . $PhoneNumber . "','" . $Email . "','" . $Address . "')";
 		if( $result = $conn->query($sql) != TRUE )
 		{
 			returnWithError( $conn->error );
