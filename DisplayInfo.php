@@ -2,12 +2,12 @@
 
         $inData = getRequestInfo();
 
-    $Id = 0;
-    $firstName = "";
-    $lastName = "";
-    $email = "";
-    $phone = "";
-    $addr = "";
+    	$Id = $inData["Id"];
+        $firstName = "";
+    	$lastName = "";
+    	$email = "";
+    	$phone = "";
+    	$addr = "";
 
         $conn = new mysqli("localhost", "Obelisk", "TheTormentorOfCOP4331!", "COP4331");
         if ($conn->connect_error)
@@ -22,13 +22,13 @@
                 {
                         $row = $result->fetch_assoc();
                         $firstName = $row["FirstName"];
-            $lastName = $row["LastName"];
-            $email = $row["Email"];
-            $phone = $row["PhoneNumber"];
-            $addr = $row["Address"];
-                        $Id = $row["Id"];
+                        $lastName = $row["LastName"];
+                         $email = $row["Email"];
+                         $phone = $row["PhoneNumber"];
+                         $addr = $row["Address"];
+                        $Id = $inData["Id"];
 
-                        returnWithInfo($firstName, $lastName, $email, $phone, $addr, $Id );
+                        returnWithInfo($firstName, $lastName, $Id, $email, $phone, $addr);
                 }
                 else
                 {
@@ -38,7 +38,8 @@
         }
 
         function getRequestInfo()
-        { return json_decode(file_get_contents('php://input'), true);
+        {
+			return json_decode(file_get_contents('php://input'), true);
         }
 
         function sendResultInfoAsJson( $obj )
@@ -53,9 +54,9 @@
                 sendResultInfoAsJson( $retValue );
         }
 
-        function returnWithInfo( $firstName, $lastName, $Id )
+        function returnWithInfo( $firstName, $lastName, $Id, $email, $phone, $addr )
         {
-                $retValue = '{"Id":' . $Id . ',"FirstName":"' . $firstName . '","LastName":"' . $lastName . '","Email":"' . $email . '","PhoneNumber":"' . $phone . '","Address":"' . $addr . '","error":""}';
+                $retValue = '{"Id":' . $Id . ',"FirstName":"' . $firstName . '","LastName":"' . $lastName . '","Email":"' .$email . '","PhoneNumber":"' . $phone . '","Address":"' . $addr . '","error":""}';
                 sendResultInfoAsJson( $retValue );
         }
 
