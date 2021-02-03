@@ -1,7 +1,7 @@
 var urlBase = 'http://contactlookup.ninja/LAMPAPI';
 var extension = 'php';
 
-var userId = 0;
+var userID = 0;
 var firstName = "";
 var lastName = "";
 
@@ -48,7 +48,7 @@ function doAlert()
 
 function doLogin()
 {
-	userId = 0;
+	userID = 0;
 	firstName = "";
 	lastName = "";
 	
@@ -61,7 +61,7 @@ function doLogin()
 //	var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
 	var jsonPayload = '{"Login" : "' + login + '", "Password" : "' + password + '"}';
 	var url = urlBase + '/Login.' + extension;
-
+ 	 window.alert(jsonPayload);
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, false);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -70,19 +70,20 @@ function doLogin()
 		xhr.send(jsonPayload);
 		
 		var jsonObject = JSON.parse( xhr.responseText );
-		
-		userId = jsonObject.ID;
-		if( userId < 1 )
+		window.alert(jsonObject.ID);
+    	userID = jsonObject.ID;
+		if( userID < 1 )
 		{
 			document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 			return;
 		}
 		
 		firstName = jsonObject.FirstName;
-		lastName = jsonObject.LastName;
+    	lastName = jsonObject.LastName;
+    	window.alert(" " + userID + " " + firstName + " " + lastName);
 		saveCookie();
 
-		window.location.href = "color.html";
+		window.location.href = "contacts.html";
 		return false;
 	}
 	catch(err)
@@ -100,12 +101,12 @@ function saveCookie()
 	var minutes = 20;
 	var date = new Date();
 	date.setTime(date.getTime()+(minutes*60*1000));	
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userID=" + userID + ";expires=" + date.toGMTString();
 }
 
 function readCookie()
 {
-	userId = -1;
+	userID = -1;
 	var data = document.cookie;
 	var splits = data.split(",");
 	for(var i = 0; i < splits.length; i++) 
@@ -120,13 +121,13 @@ function readCookie()
 		{
 			lastName = tokens[1];
 		}
-		else if( tokens[0] == "userId" )
+		else if( tokens[0] == "userID" )
 		{
-			userId = parseInt( tokens[1].trim() );
+			userID = parseInt( tokens[1].trim() );
 		}
 	}
 	
-	if( userId < 0 )
+	if( userID < 0 )
 	{
 		window.location.href = "index.html";
 	}
@@ -138,7 +139,7 @@ function readCookie()
 
 function doLogout()
 {
-	userId = 0;
+	userID = 0;
 	firstName = "";
 	lastName = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
@@ -147,18 +148,29 @@ function doLogout()
 
 function addContact()
 {
+	window.alert(userID);
+  if(userID===0){
+    window.location.href = "index.html";
+    return 0;
+  }
 
 	//add address field to webpage
-	//add addContactResult to webpage
-	var FirstName = document.getElementById("addFirstName").value;
-	var LastName = document.getElementById("addLastName").value;
+  //add addContactResult to webpage
+  var fullName = document.getElementById("addName").value;
+  var result = fullName.split(" ");
+  if(result[1] === undefined){
+    result[1] = "";
+  }
+
+	var FirstName = result[0];
+	var LastName = result[1];
 	var Email = document.getElementById("addEmail").value;
 	var PhoneNumber = document.getElementById("addPhoneNumber").value;
 	var Address = document.getElementById("addAddress").value;
 
-	document.getElementById("colorAddResult").innerHTML = "";
+	document.getElementById("contactAddResult").innerHTML = "";
 
-	var jsonPayload = '{"UserID" : "' + userId + '", "FirstName" : "' + FirstName + '", "LastName" : "' + LastName + '", "PhoneNumber" : "' +PhoneNumber+ '", "Email" : "' +Email+ '"}'
+  var jsonPayload = '{"UserID" : "' + userID + '", "FirstName" : "' + FirstName + '", "LastName" : "' + LastName + '", "PhoneNumber" : "' + PhoneNumber + '", "Email" : "' + Email + '", "Address" : "' +Address+ '"}';
 
 	var url = urlBase + '/AddContact.' + extension;
 
@@ -171,7 +183,7 @@ function addContact()
 		xhr.onreadystatechange = function()
 		{
 			if (this.readyState == 4 && this.status == 200){
-				document.getElementById("addContactResult").innerHTML = "Contact has been added";
+				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -254,3 +266,175 @@ function searchColor()
 	}
 	
 }
+
+angular.module("contactList", [])
+  // .filter("favorites", function() {
+  //   return function(favorites){
+  //     switch (favorites) {
+  //       case "":
+  //         $scope.nameList[$index].favorite = "favorite";
+  //         break;
+  //       case "favorite":
+  //         $scope.nameList[$index].favorite = "";
+  //         break;
+  //     }
+  //   }
+  // })
+  .controller("nameAdderController", function($scope) {
+
+    //set temp initial values for testing
+    //$scope.nameBox = "George";
+    //$scope.emailBox = "george@example.com";
+    //
+
+    var nameList = [{
+      name: "Scott",
+      favorite: "",
+      phone: "888-888-8888",
+      email: "scott@website.com",
+      address: "685 address south"
+    }, {
+      name: "Chris",
+      favorite: "",
+      phone: "888-888-8888",
+      email: "chris@website.com",
+      address: "685 address south"
+    }, {
+      name: "Dave",
+      favorite: "",
+      phone: "888-888-8888",
+      email: "dave@website.com",
+      address: "685 address south"
+    }, {
+      name: "John",
+      favorite: "",
+      phone: "888-888-8888",
+      email: "john@website.com",
+      address: "685 address south"
+    }, {
+      name: "Craig",
+      favorite: "",
+      phone: "888-888-8888",
+      email: "craig@website.com",
+      address: "685 address south"
+    }, {
+      name: "Sarah",
+      favorite: "favorite",
+      phone: "888-888-8888",
+      email: "sarah@website.com",
+      address: "685 address south"
+    }, {
+      name: "Nick",
+      favorite: "",
+      phone: "888-888-8888",
+      email: "nick@website.com",
+      address: "685 address south"
+    }, {
+      name: "Laura",
+      favorite: "",
+      phone: "888-888-8888",
+      email: "laura@website.com",
+      address: "688 address south"
+    }, {
+      name: "Amy",
+      favorite: "",
+      phone: "888-888-8888",
+      email: "amy@website.com",
+      address: "685 address south"
+    }, ];
+    $scope.nameList = nameList;
+
+    $scope.favName = function($index) {
+      switch ($scope.nameList[$index].favorite) {
+        case "":
+          $scope.nameList[$index].favorite = "favorite";
+          break;
+        case "favorite":
+          $scope.nameList[$index].favorite = "";
+          break;
+      }
+
+      console.log($scope.nameList[$index].favorite);
+    }
+
+    $scope.editing = false;
+  
+    $scope.openEdit = function($index) {
+      if (!$scope.editing) {
+        //edit contact is open
+        $scope.editing = true;
+        $scope.contactName = $scope.nameList[$index].name;
+        $scope.nameBox = $scope.nameList[$index].name;
+        $scope.emailBox = $scope.nameList[$index].email;
+        $scope.phoneBox = $scope.nameList[$index].phone;
+        $scope.addressBox = $scope.nameList[$index].address;
+        $scope.favBox = $scope.nameList[$index].favorite;
+        if($scope.favBox == "favorite"){
+          $scope.favBox = true;
+        }else{
+          $scope.favBox = false;
+        }
+      } else {
+        $scope.editing = false;
+        $scope.emailBox = "";
+        $scope.nameBox = "";
+        $scope.phoneBox = "";
+      }
+      $scope.editContact = function(){
+          
+       
+          console.log($scope.nameList[$index]);
+          $scope.nameList.splice($index, 1);
+          $scope.addContact();
+          $scope.editing = false;
+        }
+    }
+
+    $scope.nameSorter = function() {
+      var byName = $scope.nameList.slice(0)
+      byName.sort(function(a, b) {
+        var x = a.name.toLowerCase();
+        var y = b.name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      $scope.nameList = byName;
+    }
+    
+    //sort onload
+    $scope.nameSorter();
+
+    $scope.removeName = function($index) {
+      var curName = $scope.nameList[$index].name;
+      $scope.nameList.splice($index, 1);
+      console.log(curName + " removed");
+    }
+
+    $scope.deleteAll = function() {
+      $scope.nameList = [];
+    }
+
+    $scope.favSort = false;
+
+    $scope.favToggle = function() {
+      if ($scope.favSort) {
+        $scope.favSort = false;
+      } else {
+        $scope.favSort = true;
+      }
+      console.log($scope.favSort);
+    }
+
+    $scope.filterFavs = function(obj) {
+      //console.log(obj.name, obj.favorite);
+      if ($scope.favSort) {
+        if (obj.favorite === "favorite") {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+
+    }
+  });
