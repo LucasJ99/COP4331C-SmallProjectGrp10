@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - SmallProj1-Contact2</title>
+  <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css'><link rel="stylesheet" href="css/contactStyle.css">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script><script  src="js/code.js"></script>
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() 
+	{
+		readCookie();
+	}, false);
+</script>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div ng-app="contactList" ng-controller="nameAdderController as nameAdder">
+  <div class="container">
+    <div class="row">
+      <header class="col-md-offset-1 col-md-10">
+        <h1>Contact Management</h1>
+       
+        <hr>
+      </header>
+    </div>
+
+    <div class="row">
+      <div class="col-md-offset-1 col-md-3 module contact-builder">
+
+        <form class="form" ng-hide="editing">
+          <h4>Add Contact</h4>
+          <div class="form-group">
+            <input type="text" id="addName" class="form-control" placeholder="Name (First & Last)" ng-model="nameBox" required>
+          </div>
+          <div class="form-group">
+            <input type="email" id="addEmail" class="form-control" placeholder="Email..." ng-model="emailBox">
+          </div>
+          <div class="form-group">
+            <input type="type" id="addPhoneNumber" class="form-control" placeholder="Phone..." ng-model="phoneBox" required>
+          </div>
+          <div class="form-group">
+            <input type="type" id="addAddress" class="form-control" placeholder="Address..." ng-model="addressBox">
+          </div>
+          
+          <div class="form-group">
+            <button type="button" class="btn btn-primary" onclick="addContact();"><i class="glyphicon glyphicon-plus"></i>Add Contact</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+            <span id="contactAddResult"></span>
+          </div>
+        </form>
+
+        <form ng-submit="editContact()" ng-show="editing" class="animated flipInY">
+          <h4>Edit {{contactName}}</h4>
+          <div class="form-group">
+            <input type="text" id="name" class="form-control" placeholder="Name (First & Last)" ng-model="nameBox" required>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" class="form-control" placeholder="Email" ng-model="emailBox">
+          </div>
+          <div class="form-group">
+            <input type="type" id="phone" class="form-control" placeholder="Phone" ng-model="phoneBox">
+          </div>
+          <div class="form-group">
+            <input type="type" id="address" class="form-control" placeholder="address..." ng-model="addressBox">
+          </div>
+          
+          <div class="form-group">
+            <button type="submit" class="btn btn-default">Edit Contact</button>
+            <button ng-click="openEdit()" class="btn btn-default">Cancel</button>
+          </div>
+        </form>
+
+      </div>
+      <div class="col-md-7 module contact-list">
+        <form>
+          <div class="form-group">
+            <h4>Search Contact</h4>
+            <div class="pull-left" style="width:85%">
+              <input placeholder="Name" class="form-control" id="searchField"></input>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="searchContact()"><i class="glyphicon glyphicon-search"></i>Search</button>
+          <span id="searchResult"></span>
+          </div>
+          <div class="form-group pull-right">
+            <button type="button" class="btn btn-danger" ng-click="deleteAll()"><i class="glyphicon glyphicon-fire"></i> Delete All Contacts</button>
+          </div>
+        </form>
+        <div class="table-wrap clearfix">
+          <table class="table table-hover table-striped table-responsive">
+            <thead>
+              <tr>
+                <th ng-click="nameSorter()">Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="obj in nameList track by $index" class="{{obj.favorite}} animated fadeIn">
+                <td class="text-capitalize"><i class="glyphicon glyphicon-user"></i> {{ obj.name }}</td>
+                <td class="text-lowercase"><i class="glyphicon glyphicon-envelope"></i> {{ obj.email }}</td>
+                <td class="text-capitalize"><i class="glyphicon glyphicon-home"></i> {{ obj.address }}</td>
+                <td><i class="glyphicon glyphicon-earphone"></i> {{obj.phone}}</td>
+                <td class="text-right">
+                  <a href="#" ng-click="openEdit($index)"><i class="glyphicon glyphicon-pencil"></i></a>
+                  <a href="#" ng-click="removeName($index)"><i class="glyphicon glyphicon-trash"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+    </div>
+  </div>
+</div>
+<!-- partial -->
+
+</body>
+</html>
