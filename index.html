@@ -31,7 +31,8 @@
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Add Contact</button>
-            <button type="reset" class="btn btn-default">Reset</button>
+            <button type="reset" class="btn btn-default">Reset</button>           
+            <button type="Logout" class="btn btn-default2"><i class="glyphicon glyphicon-new-window"></i>Logout</button>
           </div>
         </form>
 
@@ -66,9 +67,9 @@
              <h4>Search Contact</h4>
             <input placeholder="Name, Email, Phone..." class="form-control" ng-model="filters.name"></input>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <input type="checkbox" ng-model="exactMatch"> Exact Match</input>
-          </div>
+          </div> -->
           <div class="form-group pull-right">
             <button type="button" class="btn btn-danger" ng-click="deleteAll()"><i class="glyphicon glyphicon-fire"></i> Delete All Contacts</button>
             <button ng-click="favToggle()" ng-model="favSort" ng-class="on" class="btn btn-default favorite-btn"><i class="glyphicon glyphicon-heart"></i> Show Favorites</button>
