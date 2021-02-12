@@ -1,0 +1,117 @@
+html, body {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  background-color: #21618C;
+	background-image: linear-gradient(to right, #21618C, #fa4299);
+}
+
+.row {
+  padding: 0 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 20px 0;
+}
+ul li {
+  padding: 10px 0;
+  text-transform: capitalize;
+  font-size: 1.5em;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  background: #fff;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  word-wrap: break-word;
+}
+ul li:hover {
+  background: #f3f3f3;
+}
+ul li span {
+  float: right;
+}
+
+small {
+  color: #999;
+}
+
+[class^=col-] {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.contact-builder {
+  background: #fff;
+}
+
+.contact-list {
+  border-radius: 30px;
+  background: #f3f3f3;
+}
+
+.container {
+  background: #fff;
+  padding-bottom: 40px;
+  padding-top: 10px;
+  border-radius: 30px;
+}
+
+.fav {
+  background: orange;
+}
+
+.glyphicon {
+  padding-right: 5px;
+  color: #2874a6;
+}
+
+.btn-primary .glyphicon, .btn-danger .glyphicon {
+  padding-right: 5px;
+  color: #fff;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd).favorite, .table-striped > tbody > tr:nth-of-type(even).favorite {
+  background: rgba(234, 88, 114, 0.2);
+}
+.table-striped > tbody > tr:nth-of-type(odd).favorite .glyphicon-heart, .table-striped > tbody > tr:nth-of-type(even).favorite .glyphicon-heart {
+  color: #EA5872;
+}
+
+.favorite-btn {
+  border: 1px solid rgba(234, 88, 114, 0.2);
+}
+.favorite-btn .on .glyphicon-heart {
+  color: #EA5872;
+}
+.favorite-btn .glyphicon-heart {
+  color: #EA5872;
+}
+
+form {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+footer[class^=col-] {
+  opacity: 0.5;
+  margin-top: 40px;
+}
+footer[class^=col-] img {
+  height: 30px;
+}
+
+th {
+  cursor: pointer;
+}
+
+table {
+  min-width: 500px;
+  width: 100%;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  width: 100%;
+}

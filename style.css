@@ -10,10 +10,8 @@ html,body{
   height: 100%;
   width: 100%;
   place-items: center;
-  background-image: url('https://cdn.statically.io/img/hdqwalls.com/wallpapers/miami-sunset-artistic-fc.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
+	background-color: #21618C;
+	background-image: linear-gradient(to right, #21618C, #fa4299);
 }
 ::selection{
   background: #fa4299;
@@ -169,7 +167,7 @@ form .btn .btn-layer{
 form .btn:hover .btn-layer{
   left: 0;
 }
-form .btn input[type="submit"]{
+form .btn input[type="button"]{
   height: 100%;
   width: 100%;
   z-index: 1;
@@ -182,4 +180,8 @@ form .btn input[type="submit"]{
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.inlineCustomForm input{
+  float:left;
 }
