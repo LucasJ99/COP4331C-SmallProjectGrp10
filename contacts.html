@@ -8,7 +8,7 @@
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css'><link rel="stylesheet" href="css/contactStyle.css">
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script><script  src="js/code.js"></script>
 <script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function() 
+	document.addEventListener('DOMContentLoaded', function()
 	{
 		readCookie();
 	}, false);
@@ -22,9 +22,11 @@
     <div class="row">
       <header class="col-md-offset-1 col-md-10">
         <h1>Contact Management</h1>
-       
         <hr>
       </header>
+			<div class="form">
+				<button type="button" class="btn btn-primary"onclick="doLogout();"><i class="glyphicon glyphicon-log-out"></i>Logout</button>
+			</div>
     </div>
 
     <div class="row">
@@ -44,7 +46,7 @@
           <div class="form-group">
             <input type="type" id="addAddress" class="form-control" placeholder="Address..." ng-model="addressBox">
           </div>
-          
+
           <div class="form-group">
             <button type="button" class="btn btn-primary" onclick="addContact();"><i class="glyphicon glyphicon-plus"></i>Add Contact</button>
             <button type="reset" class="btn btn-default">Reset</button>
@@ -66,7 +68,7 @@
           <div class="form-group">
             <input type="type" id="address" class="form-control" placeholder="address..." ng-model="addressBox">
           </div>
-          
+
           <div class="form-group">
             <button type="submit" class="btn btn-default">Edit Contact</button>
             <button ng-click="openEdit()" class="btn btn-default">Cancel</button>
