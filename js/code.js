@@ -14,12 +14,14 @@ function doRegister() {
 	var password = document.getElementById("registrationPassword").value;
 	var retypedPassword = document.getElementById("registrationRetypedPassword").value;
 
+	// All fields required for new account
 	if (firstName.length === 0 || lastName.length === 0 || username.length === 0 || password.length === 0 || retypedPassword.length === 0)
 	{
 		document.getElementById("registerResult").innerHTML = "All fields are required.";
 		return;
 	}
 
+	// Verify passwords match
 	if (password != retypedPassword) {
 		document.getElementById("registerResult").innerHTML = "Passwords do not match!";
 		return;
@@ -136,14 +138,27 @@ function doLogout() {
 
 function addContact() {
 	window.alert(userID);
+
 	if (userID === 0) {
 		window.location.href = "index.html";
 		return 0;
 	}
 
-	//add address field to webpage
-	//add addContactResult to webpage
+	// Add address field to webpage
+	// Add addContactResult to webpage
 	var fullName = document.getElementById("addName").value;
+
+	// User must specify name to add contact
+	if (fullName.length === 0)
+	{
+		document.getElementById("contactAddResult").style.display = "block";
+		document.getElementById("contactAddResult").innerHTML = "Name field is required.";
+		document.getElementById("addEmail").value ="";
+		document.getElementById("addPhoneNumber").value ="";
+		document.getElementById("addAddress").value = "";
+		return;
+	}
+
 	var result = fullName.split(" ");
 	if (result[1] === undefined) {
 		result[1] = "";
@@ -284,6 +299,7 @@ angular.module("contactList", [])
 			}
 		}
 
+		// Sort alphabetically
 		$scope.nameSorter = function () {
 			if($scope.nameList)
 			var byName = $scope.nameList.slice(0)
