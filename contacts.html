@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" >
 <head>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-3BFCW3KL7P"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-3BFCW3KL7P');
+	</script>
+
   <meta charset="UTF-8">
-  <title>CodePen - SmallProj1-Contact2</title>
+  <title>Contacts</title>
   <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css'><link rel="stylesheet" href="css/contactStyle.css">
@@ -35,13 +46,13 @@
         <form class="form" ng-hide="editing">
           <h4>Add Contact</h4>
           <div class="form-group">
-            <input type="text" id="addName" class="form-control" placeholder="Name (First & Last)" ng-model="nameBox" required>
+            <input type="text" id="addName" class="form-control" placeholder="Name (First & Last)" ng-model="nameBox">
           </div>
           <div class="form-group">
             <input type="email" id="addEmail" class="form-control" placeholder="Email..." ng-model="emailBox">
           </div>
           <div class="form-group">
-            <input type="type" id="addPhoneNumber" class="form-control" placeholder="Phone..." ng-model="phoneBox" required>
+            <input type="type" id="addPhoneNumber" class="form-control" placeholder="Phone..." ng-model="phoneBox">
           </div>
           <div class="form-group">
             <input type="type" id="addAddress" class="form-control" placeholder="Address..." ng-model="addressBox">
