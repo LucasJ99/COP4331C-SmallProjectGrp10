@@ -15,8 +15,7 @@ function doRegister() {
 	var retypedPassword = document.getElementById("registrationRetypedPassword").value;
 
 	// All fields required for new account
-	if (firstName.length === 0 || lastName.length === 0 || username.length === 0 || password.length === 0 || retypedPassword.length === 0)
-	{
+	if (firstName.length === 0 || lastName.length === 0 || username.length === 0 || password.length === 0 || retypedPassword.length === 0) {
 		document.getElementById("registerResult").innerHTML = "All fields are required.";
 		return;
 	}
@@ -135,9 +134,7 @@ function doLogout() {
 	window.location.href = "index.html";
 }
 
-
 function addContact() {
-	window.alert(userID);
 
 	if (userID === 0) {
 		window.location.href = "index.html";
@@ -149,12 +146,12 @@ function addContact() {
 	var fullName = document.getElementById("addName").value;
 
 	// User must specify name to add contact
-	if (fullName.length === 0)
-	{
+	if (fullName.length === 0) {
 		document.getElementById("contactAddResult").style.display = "block";
+		document.getElementById("contactAddResult").className = "alert alert-danger"	
 		document.getElementById("contactAddResult").innerHTML = "Name field is required.";
-		document.getElementById("addEmail").value ="";
-		document.getElementById("addPhoneNumber").value ="";
+		document.getElementById("addEmail").value = "";
+		document.getElementById("addPhoneNumber").value = "";
 		document.getElementById("addAddress").value = "";
 		return;
 	}
@@ -184,11 +181,12 @@ function addContact() {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				document.getElementById("contactAddResult").style.display = "block";
+				document.getElementById("contactAddResult").className = "alert alert-success"
 				var str = "" + fullName + " has been added to your contacts";
 				document.getElementById("contactAddResult").innerHTML = str;
 				document.getElementById("addName").value = "";
-				document.getElementById("addEmail").value ="";
-				document.getElementById("addPhoneNumber").value ="";
+				document.getElementById("addEmail").value = "";
+				document.getElementById("addPhoneNumber").value = "";
 				document.getElementById("addAddress").value = "";
 			}
 		};
@@ -243,8 +241,8 @@ angular.module("contactList", [])
 						var jsonObject = JSON.parse(xhr.responseText);
 
 						var num = jsonObject.length;
-						for(itr=0;itr<num;itr++){
-							var obj = {name: ""+jsonObject[itr].FirstName+" "+jsonObject[itr].LastName, phone: jsonObject[itr].PhoneNumber, email: jsonObject[itr].Email, address: jsonObject[itr].Address, ID: jsonObject[itr].ID}
+						for (itr = 0; itr < num; itr++) {
+							var obj = { name: "" + jsonObject[itr].FirstName + " " + jsonObject[itr].LastName, phone: jsonObject[itr].PhoneNumber, email: jsonObject[itr].Email, address: jsonObject[itr].Address, ID: jsonObject[itr].ID }
 							$scope.nameList.push(obj);
 						}
 						$scope.nameSorter();
@@ -285,6 +283,7 @@ angular.module("contactList", [])
 				$scope.phoneBox = $scope.nameList[$index].phone;
 				$scope.addressBox = $scope.nameList[$index].address;
 
+
 			} else {
 				$scope.editing = false;
 				$scope.emailBox = "";
@@ -293,16 +292,62 @@ angular.module("contactList", [])
 			}
 			$scope.editContact = function () {
 				console.log($scope.nameList[$index]);
+				//
+				//
+				//
+				
+				
+				var nameArray = $scope.nameBox.split(" ");
+				if(nameArray[1] === undefined){
+					if(nameArray[0]===undefined){
+						document.getElementById("contactAddResult").style.display = "block";
+						document.getElementById("contactAddResult").innerHTML = "Name field required";
+						document.getElementById("contactAddResult").className = "alert alert-danger"
+						return;
+					}
+					nameArray[1]="";
+				}
+				
+				var jsonPayload = '{"Id" : "' + $scope.nameList[$index].ID + '","fname" : "' + nameArray[0] + '","lname" : "' + nameArray[1] +'","email" : "' +$scope.emailBox+ '","phone" : "'+$scope.phoneBox+'","addr" : "'+$scope.addressBox+'"}';
+				var url = urlBase + '/UpdateContact.' + extension;
 				$scope.nameList.splice($index, 1);
-				$scope.addContact();
-				$scope.editing = false;
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", url, true);
+				xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+				try {
+					xhr.onreadystatechange = function () {
+						if (this.readyState == 4 && this.status == 200) {
+							console.log("update success");
+							document.getElementById("contactAddResult").style.display = "block";
+							document.getElementById("contactAddResult").className = "alert alert-success"
+							document.getElementById("contactAddResult").innerHTML = "Contact updated";
+							
+							//reset fields
+							$scope.editing = false;
+							$scope.emailBox = "";
+							$scope.nameBox = "";
+							$scope.phoneBox = "";
+							$scope.addressBox = "";
+							
+							//requery after update
+							$scope.searchContact();
+						}
+					};
+					xhr.send(jsonPayload);
+					
+				}
+				catch (err) {
+					document.getElementById("contactAddResult").innerHTML = err.message;
+				}
 			}
+
 		}
 
 		// Sort alphabetically
 		$scope.nameSorter = function () {
-			if($scope.nameList)
-			var byName = $scope.nameList.slice(0)
+			if ($scope.nameList)
+				var byName = $scope.nameList.slice(0)
 			byName.sort(function (a, b) {
 				var x = a.name.toLowerCase();
 				var y = b.name.toLowerCase();
