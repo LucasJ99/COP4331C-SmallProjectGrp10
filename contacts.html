@@ -17,14 +17,13 @@
   <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css'><link rel="stylesheet" href="css/contactStyle.css">
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script><script  src="js/code.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script><script  src="js/contactsJS.js"></script>
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function()
 	{
 		readCookie();
 	}, false);
 </script>
-
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -32,21 +31,18 @@
   <div class="container">
     <div class="row">
       <header class="col-md-offset-1 col-md-10">
-        <h1>Contact Management</h1>
-        <hr>
-      </header>
-			<div class="form">
-				<button type="button" class="btn btn-primary"onclick="doLogout();"><i class="glyphicon glyphicon-log-out"></i>Logout</button>
-			</div>
+				<h1>Contact Manager</h1>
+				<span id="userName"></span>
+				<button type="button" class="btn btn-primary btn-xs" onclick="doLogout();"><i class="glyphicon glyphicon-log-out"></i>Logout</button>
+			</header>
     </div>
 
     <div class="row">
       <div class="col-md-offset-1 col-md-3 module contact-builder">
-
         <form class="form" ng-hide="editing">
           <h4>Add Contact</h4>
           <div class="form-group">
-            <input type="text" id="addName" class="form-control" placeholder="Name (First & Last)" ng-model="nameBox">
+            <input type="text" id="addName" class="form-control" placeholder="Name (First & Last)" ng-model="nameBox" required>
           </div>
           <div class="form-group">
             <input type="email" id="addEmail" class="form-control" placeholder="Email..." ng-model="emailBox">
@@ -59,7 +55,7 @@
           </div>
 
           <div class="form-group">
-            <button type="button" class="btn btn-primary" onclick="addContact();"><i class="glyphicon glyphicon-plus"></i>Add Contact</button>
+            <button type="button" class="btn btn-primary" ng-click="addContact()"><i class="glyphicon glyphicon-plus"></i>Add Contact</button>
             <button type="reset" class="btn btn-default">Reset</button>
           </div>
           <div class="alert alert-success" style="display:none" id="contactAddResult"></div>
@@ -68,16 +64,16 @@
         <form ng-submit="editContact()" ng-show="editing" class="animated flipInY">
           <h4>Edit {{contactName}}</h4>
           <div class="form-group">
-            <input type="text" id="name" class="form-control" placeholder="Name (First & Last)" ng-model="nameBox" required>
+            <input type="text" id="editFullName" class="form-control" placeholder="Name (First & Last)" ng-model="nameBox" required>
           </div>
           <div class="form-group">
-            <input type="email" id="email" class="form-control" placeholder="Email" ng-model="emailBox">
+            <input type="email" id="editEmail" class="form-control" placeholder="Email" ng-model="emailBox">
           </div>
           <div class="form-group">
-            <input type="type" id="phone" class="form-control" placeholder="Phone" ng-model="phoneBox">
+            <input type="type" id="editPhone" class="form-control" placeholder="Phone" ng-model="phoneBox">
           </div>
           <div class="form-group">
-            <input type="type" id="address" class="form-control" placeholder="address..." ng-model="addressBox">
+            <input type="type" id="editAddress" class="form-control" placeholder="address..." ng-model="addressBox" >
           </div>
 
           <div class="form-group">
